@@ -16,7 +16,7 @@ Do not forget to install `python-adblock` if you want brave-like adblocking. To 
 
 Adding to your crontab at whatever interval you wish:
 ```sh
-qutebrowser --nowindow ':adblock-update;;later 10000 download-clear;;later 10500 close'
+qutebrowser --nowindow ':adblock-update;;later 10000 download-clear'
 ```
 will update the adblock lists without starting a qutebrowser window.
 
