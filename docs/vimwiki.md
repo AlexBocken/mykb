@@ -54,6 +54,20 @@ Afterwords run `:Helptags` in the command prompt of vim.
 Add `Plugin 'vimwiki/vimwiki'` to the `init.vim` or `.vimrc`.
 Afterwords run `vim +PluginInstall +qall` in the shell to install it.
 
+## Install of the mykb - vimwiki
+
+To install the _mykb_ version of vimwiki, clone [https://github.com/AlexBocken/mykb](https://github.com/AlexBocken/mykb) in to the folder of your preference and add
+```
+let g:vimwiki_list = [{'path': '/PATH/TO/DIRECTORY/mykb', 'syntax': 'markdown', 'ext': '.md'}]
+```
+to your `.vimrc`.
+To make the usage more userfriendly, add
+```
+alias mykb='nvim /PATH/mykb.md`
+```
+to your aliases. To then open it, just run `mykb`.
+
+
 ### Configuration
 
 To go to the index page you enter `<leader>ww`.
