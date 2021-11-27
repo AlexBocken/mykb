@@ -79,7 +79,7 @@ map <leader>v :VimwikiIndex <Enter>
 On default the directory for the markdown files is `~/vimwiki/index.wiki`.
 To change this, add the following line to your `.vimrc`:
 ```vim
-	let g:vimwiki_list = [{'path': '/PATH/TO/DIRECTORY/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '/PATH/TO/DIRECTORY/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 ```
 Here you can also add several wikis.
 Assuming you want to have one wiki exclusively for coding related matters and an other one for every day related knowledge, add
