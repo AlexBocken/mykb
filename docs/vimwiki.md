@@ -63,7 +63,7 @@ let g:vimwiki_list = [{'path': '/PATH/TO/DIRECTORY/mykb', 'syntax': 'markdown', 
 to your `.vimrc`.
 To make the usage more userfriendly, add
 ```
-alias mykb='nvim /PATH/mykb.md`
+alias mykb='nvim /PATH/index.md`
 ```
 to your aliases. To then open it, just run `mykb`.
 
