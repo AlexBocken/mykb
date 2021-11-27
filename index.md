@@ -1,7 +1,7 @@
 # Programs
-- [qutebrowser](docs/qutebrowser)
-- [vimwiki](docs/vimwiki)
-- [weechat](docs/weechat)
+- [qutebrowser](docs/qutebrowser.md)
+- [vimwiki](docs/vimwiki.md)
+- [weechat](docs/weechat.md)
 
 # Admin
 - [README](README.md)
