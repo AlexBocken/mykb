@@ -1,6 +1,6 @@
 # Vim-Wiki
 
-## TL:DR - keybindings
+## TL;DR - keybindings
 
 - `<Leader>ww` -- Open default wiki index file.
 - `<Leader>wt` -- Open default wiki index file in a new tab.
