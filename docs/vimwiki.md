@@ -18,14 +18,14 @@
 ## General
 
 Vim wiki is a vim plugin making it possible to effectivly keep wiki-style knowledge sorted on your local machine.
-The single pages are written in markdown and are interlinked.
-It can further be used as a Diary or to manage TODO lists, and to export the whole wiki in to an website, meaning single HTML files, which are interlinked and can be published.
+The single pages are written in Markdown and are interlinked.
+It can further be used as a Diary or to manage TODO lists, and to export the whole wiki in to a website, meaning single HTML files, which are interlinked and can be published.
 Since every entry is a simple markdown file, this makes it easy to collaborate on a common wiki using git.
 
 ### Installation
 
 The vim-wiki plugin can be installed like every vim plugin.
-To test if the install was successful, execute `:VimwikiIndex` in the command prompt of vim.
+To test if the installation was successful, execute `:VimwikiIndex` in the command prompt of vim.
 You have to add the following lines to your `.vimrc`, irrespective of the installation method used.
 ```vim
 set nocompatible
@@ -40,7 +40,7 @@ Afterwords run `:PlugInstall` in the command prompt of vim.
 
 #### [Pathogen](https://www.vim.org/scripts/script.php?script_id=2332)
 
-Go to your vim config folder and clone the vimwiki github repository into the `bundle` folder.
+Go to your vim config folder and clone the vimwiki gitHub repository into the `bundle` folder.
 ```sh
 cd $CONFIG/vim
 mkdir bundle
@@ -82,7 +82,7 @@ To change this, add the following line to your `.vimrc`:
 let g:vimwiki_list = [{'path': '/PATH/TO/DIRECTORY/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 ```
 Here you can also add several wikis.
-Assuming you want to have one wiki exclusively for coding related matters and an other one for every day related knowledge, add
+Assuming you want to have one wiki exclusively for coding related matters and another one for everyday related knowledge, add
 ```vim
 let g:vimwiki_list = [
 	\ {'path': '/PATH/wiki_code', 'syntax': 'markdown', 'ext': '.md'},
@@ -115,8 +115,8 @@ To link the new entry to the diary index page, use `:VimwikiDiaryIndex` to go to
 Then execute `:VimwikiDiaryGenerateLinks`. This adds all unlinked diary entries to the diary index page.
 The default keybindings for this are
 - `[number] <leader> wi`: Move to the diary index of wiki i.
-- `[number] <leader> w <leader> w`: Open todays diary file for wiki i.
-- `[number] <leader> w <leader> t`: Open todays diary file for wiki i in a new tab.
+- `[number] <leader> w <leader> w`: Open today's diary file for wiki i.
+- `[number] <leader> w <leader> t`: Open today's diary file for wiki i in a new tab.
 
 #### Encryption of pages
 
@@ -132,15 +132,15 @@ Select thee correct key and close the prompt.
 
 #### Conversion to HTML
 
-Vimwiki has the built in feature to export your wiki in to an HTML wiki.
+Vimwiki has the built-in feature to export your wiki in to an HTML wiki.
 The build in version only supports the vimwiki markup language.
 If you write in this language, you should change the `vimwiki_list` command such that it includes `'syntax': 'vimwiki', 'ext': '.wiki'`.
 Afterwords you can just run
 ```
 :VimwikiAll2HTML
 ```
-To only convert the current page to html, use `:Vimwiki2HTML`.
-which converts all existing `.wiki` files in to html files and links them against each other.
+To only convert the current page to Html, use `:Vimwiki2HTML`
+which converts all existing `.wiki` files in to Html files and links them against each other.
 
-To expand this capability to markdown, you have to include certain wrapper scripts.
+To expand this capability to Markdown, you have to include certain wrapper scripts.
  -  TODO
