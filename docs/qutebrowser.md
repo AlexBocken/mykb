@@ -22,7 +22,7 @@ will update the adblock lists without starting a qutebrowser window.
 
 ## Greasemonkey scripts
 
-To add scripts such as 4chanX to qutebrowser add the js file to `${XDG_DATA_HOME:-$HOME/.local/share}/qutebrowser/greasemonkey`. For 4chanX this would be:
+To add scripts such as 4chanX to qutebrowser add the Js file to `${XDG_DATA_HOME:-$HOME/.local/share}/qutebrowser/greasemonkey`. For 4chanX this would be:
 
 ```sh
 wget -P ${XDG_DATA_HOME:-$HOME/.local/share}/qutebrowser/greasemonkey https://www.4chan-x.net/builds/4chan-X.user.js

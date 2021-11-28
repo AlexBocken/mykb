@@ -101,4 +101,4 @@ to not display old messages as notifications again when opening buffers for the 
 ```
 Keep in mind that this will disable notifications for the current buffer at all times. Move to the first buffer or an irrelevant one to still get reliable notifications
 
-See the [Github page](https://github.com/s3rvac/weechat-notify-send) for more configuration options.
+See the [gitHub page](https://github.com/s3rvac/weechat-notify-send) for more configuration options.
