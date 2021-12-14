@@ -48,7 +48,7 @@ Configuration is completed primarily through the Weechat interface.  First start
 
 ```sh
 cd $WEECHAT_HOME/python/matrix
-ln -s ../matrix.py ~/.weechat/python/autoload
+ln -s ../matrix.py $WEECHAT_HOME/python/autoload
 ```
 
 6. Automatically connect to the server
@@ -87,9 +87,9 @@ To get old messages decryped faster, it is reccomended to import encryption keys
 ## libnotify Notification support
 Should work straight out of the box.
 ```sh
-cd ~/.weechat/python
+cd $WEECHAT_HOME
 wget https://raw.githubusercontent.com/s3rvac/weechat-notify-send/master/notify_send.py
-cd ~/.weechat/python/autoload
+cd $WEECHAT_HOME/python/autoload
 ln -s ../notify_send.py
 ```
 
