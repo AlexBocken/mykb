@@ -1,0 +1,84 @@
+
+
+body {
+}
+
+
+.abstract {
+  padding: 5px 0px 0px 5px;
+
+}
+
+.button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid white;
+  /*padding: 7px 16px;*/
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  float: right;
+}
+
+.button1:hover {
+  background-color: rgba(236, 240, 241, 1);
+  }
+
+a {
+	text-decoration: none;
+	color: darkblue;
+}
+
+a.visited {
+	color: darkblue;
+}
+
+h1 {
+text-align: center ;
+}
+h2 {
+text-align: left ;
+}
+
+footer {
+text-align: center ;
+}
+
+li{
+  margin: 0px 0 0 -5px;
+}
+
+.mainpart{
+margin: auto ;
+padding: 50px 0px ;
+margin-bottom: 100px ;
+max-width: 1000px;
+font-size: 14pt;
+
+}
+p {
+	line-height: 1.2;
+}
+
+@media only screen and (min-width: 920px) {
+  /* For tablets: */
+
+  li {margin: 0px 0 0 0;}
+  .mainpart {
+	font-size: 14pt;
+        max-width: 1000px;
+  }
+  table {   border: 2px solid #dddddd;
+  	    font-size: 14pt;
+    }
+
+}
+@media only screen and (min-width: 1000px) {
+  /* For desktop: */
+  li {margin: 0px 0 0 0;}
+  .mainpart {font-size: 14pt;  }
+  table {   border: 2px solid #dddddd;
+  	    font-size: 14pt;
+    }
+
+}
