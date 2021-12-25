@@ -143,4 +143,26 @@ To only convert the current page to Html, use `:Vimwiki2HTML`
 which converts all existing `.wiki` files in to Html files and links them against each other.
 
 To expand this capability to Markdown, you have to include certain wrapper scripts.
- -  TODO
+This wrapper script takes several arguments
+```
+1. force : [0/1] overwrite an existing file
+2. syntax : the syntax chosen for this wiki
+3. extension : the file extension for this wiki
+4. output_dir : the full path of the output directory, i.e. ‘path_html’
+5. input_file : the full path of the wiki page
+6. css_file : the full path of the css file for this wiki
+7. template_path : the full path to the wiki’s templates
+8. template_default : the default template name
+9. template_ext : the extension of template files
+10. root_path : a count of ../ for pages buried in subdirs if you have wikilink [[dir1/dir2/dir3/my page in a subdir]] then e %root_path% is replaced by ‘../../../’.
+```
+With this you then can use `pandoc` or similar markdown parser to generate your html files.
+The script used for this is found [here](https://mykb.dieminger.ch/snippets/wikihtml.sh).
+To enable the custom script, change the `vimwiki_list` to:
+```
+let g:vimwiki_list = [{"path": '/PATH/TO/DIRECTORY/vimwiki',
+\ "path_html": '/PATH/TO/DIRECTORY/vimwiki/HTML,
+\ "syntax": 'markdown', "ext": '.md',
+\ "custom_wiki2html": '~/wikihtml.sh',
+\ "force": 1, "auto_export": 1}]
+```
