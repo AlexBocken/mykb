@@ -8,3 +8,4 @@ For server stuff I'm mostly using Debian. See [landchad.net](https://landchad.ne
 ## Current state
 
 A wrapper script still needs to be written for an easier CLI.
+The html version of this can be found at mykb.dieminger.ch
