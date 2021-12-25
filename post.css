@@ -1,0 +1,72 @@
+
+header h1 {
+	font-size: 40px ;
+	padding-top: 20px;
+}
+h1:after {
+    content:' ';
+    display:block;
+    border:1px solid rgba(0, 3, 4, 0.1);
+    border-radius:1px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+    width: 98%
+}
+body {
+max-width: 80% ;
+margin: auto ;
+padding: 0px ;
+padding-bottom: 50px;
+}
+
+a {
+color: blue;
+text-decoration: none;}
+a:visited{
+color: blue;
+text-decoration: none;
+}
+a:hover{
+color:grey;
+text-decoration: none;
+}
+pre code {
+  display: block;
+  background: none;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
+  max-width: 100%;
+  min-width: 100px;
+  padding: 0;
+}
+
+code {
+	color: darkblue ;
+	border-radius: 5px ;
+}
+pre {
+	background: #dddddd ;
+	border: 1px solid #ffffff ;
+	border-radius: 20px ;
+	padding: 1em ;
+	white-space: pre-wrap;
+	overflow-wrap: break-word ;
+	max-width: 700px ;
+	margin: auto ;
+}
+pre {
+	padding: 1em ;
+	white-space: pre-wrap;
+	overflow-wrap: break-word ;
+	max-width: 700px ;
+	margin: auto ;
+}
+
+.MAIN {
+        margin: auto ;
+	text-align: center;
+}
