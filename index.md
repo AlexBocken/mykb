@@ -10,7 +10,7 @@ Happy to accept pull requests for new topics!
     A wiki script for vim
 - [weechat](docs/weechat.md) A TUI client for matrix
 - [ssh](docs/ssh.md) ssh configuration
-- [GIT](docs/GIT) A version control software
+- [GIT](docs/GIT.md) A version control software
 
 # Admin
 
