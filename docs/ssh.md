@@ -1,6 +1,4 @@
 # General
-
-SSH is a helper utensil to connnect to remote servers.
 The basic syntax is
 ```
 ssh user@domain
@@ -19,8 +17,7 @@ Change the permisions of this folder using `chmod 700 ~/.ssh`.
 The next step is to make the `authorized_keys` file using
 ```
 touch ~/authorized_keys
-chmod 600 ~/.ssh/authorized_keys
-```
+chmod 600 ~/.ssh/authorized_keys ```
 Now open the `authorized_keys` and copy-paste the public key contents in to it.
 
 One can also use `ssh-copy-id user@domain` after generating the key-pair.
