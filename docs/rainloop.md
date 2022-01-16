@@ -75,7 +75,7 @@
 # Add database for contacts
 
 1. `mysql -uroot -p`
-2. Add a database (copy paste each single line - change `rainlooppassword` to something propper
+2. Add a database (copy paste each single line - change `rainlooppassword` to something proper
 ```sh
 
 create database rainloopdb;
