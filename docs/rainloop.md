@@ -7,15 +7,16 @@
 1. `apt install mariadb-server`
 2. `systemctl enable mysql`
 3. `apt install php php-fpm php-mysql -y`
-4. `systemctl enable php-fpm`
-	-  to test the php setup add
-	   ```
+4. `systemctl enable php-fpm` To test the php setup add the following to your site-available nginx folder. Restart nginx using `systemctl restart nginx` and add a new page called `index.php` to your homepage directory with `<?php phpinfo();?>` as the only content. If the php install worked fine, this will show you the installed php packages. Delete this afterwords.
+
+
+
+```
 	   location ~ \.php$ {
       		include snippets/fastcgi-php.conf;
       		fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
 		}
-	```
-	to your home site-available nginx config. Restart nginx using `systemctl restart nginx` and add a new page called `index.php` to your homepage directory with `<?php phpinfo();?>` as the only content. If the php install worked fine, this will show you the installed php packages. Delete this afterwords.
+```
 
 # Installing rainloop
 
