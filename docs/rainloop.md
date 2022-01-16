@@ -15,7 +15,7 @@
       		fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
 		}
 	```
-	to your home site-available nginx config. Restart nginx using `systemctl restart nginx` and add a new page called `index.php` to your homepage direactory with `<?php phpinfo();?>` as the only content. If the php install worked fine, this will show you the installed php packages. Delete this afterwords.
+	to your home site-available nginx config. Restart nginx using `systemctl restart nginx` and add a new page called `index.php` to your homepage directory with `<?php phpinfo();?>` as the only content. If the php install worked fine, this will show you the installed php packages. Delete this afterwords.
 
 # Installing rainloop
 
@@ -68,8 +68,8 @@
 
 1. Go to `http:/webmail.hostname.xyz/?admin`. Here a webinterface should pop up (If not - ty to check the php install - all same versions? Is php accessible? Are the permissions set correctly?
 2. Log in using `admin` and `12345`. Strongly recommend to change that one as soon as you log in. This can be done under `Security` in the left menu.
-3. Under `Domains` add your local domains, ports and authentification method and delte the defaults.
-4. Now you should be able to log in to the client on `webmail.hostname.xyz` using your email adress and password.
+3. Under `Domains` add your local domains, ports and authentication method and delete the defaults.
+4. Now you should be able to log in to the client on `webmail.hostname.xyz` using your email address and password.
 
 # Add database for contacts
 
