@@ -11,7 +11,7 @@ Happy to accept pull requests for new topics!
 - [weechat](docs/weechat.md) TUI client for matrix
 - [ssh](docs/ssh.md) ssh configuration
 - [GIT](docs/GIT.md) version control software
-- [neomutt](neomutt.md) highly customizable TUI email client
+- [neomutt](docs/neomutt.md) highly customizable TUI email client
 
 # Admin
 

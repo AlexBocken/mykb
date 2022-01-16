@@ -17,7 +17,8 @@ Change the permisions of this folder using `chmod 700 ~/.ssh`.
 The next step is to make the `authorized_keys` file using
 ```
 touch ~/authorized_keys
-chmod 600 ~/.ssh/authorized_keys ```
+chmod 600 ~/.ssh/authorized_keys
+```
 Now open the `authorized_keys` and copy-paste the public key contents in to it.
 
 One can also use `ssh-copy-id user@domain` after generating the key-pair.
@@ -48,19 +49,27 @@ If you need to connect to an access server before connecting to the actual serve
 
 ```
 IgnoreUnknown AddKeysToAgent,UseKeychain
+```
 
 ## All EXEMPLUM-COMPANY
+```
 Host EXEMP*
   User username
   IdentityFile ~/.ssh/id_rsa
   AddKeysToAgent yes
   UseKeychain yes
+```
 
 ## Access server
+
+```
 Host EXEMPaccess
   HostName login.example.com
+```
 
 ## Working server
+
+```
 Host EXEMPwork
   HostName work.example.com
   proxycommand ssh -CW %h:%p EXEMPaccess ## access server
