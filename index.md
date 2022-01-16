@@ -10,9 +10,10 @@ Happy to accept pull requests for new topics!
     wiki script for vim
 - [weechat](docs/weechat.md) TUI client for matrix
 - [ssh](docs/ssh.md) ssh configuration
-- [GIT](docs/GIT.md) version control software
+- [git](docs/GIT.md) version control software
 - [neomutt](docs/neomutt.md) highly customizable TUI email client
-- [rainloop](docs/rainloop.md) Webbased email client
+- [rainloop](docs/rainloop.md) webbased email client
+- [server](docs/ServerSetup.md) short guide for hosting a server
 
 # Admin
 
