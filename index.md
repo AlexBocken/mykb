@@ -12,6 +12,7 @@ Happy to accept pull requests for new topics!
 - [ssh](docs/ssh.md) ssh configuration
 - [GIT](docs/GIT.md) version control software
 - [neomutt](docs/neomutt.md) highly customizable TUI email client
+- [rainloop](docs/rainloop.md) Webbased email client
 
 # Admin
 
