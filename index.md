@@ -14,6 +14,7 @@ Happy to accept pull requests for new topics!
 - [neomutt](docs/neomutt.md) highly customizable TUI email client
 - [rainloop](docs/rainloop.md) webbased email client
 - [server](docs/ServerSetup.md) short guide for hosting a server
+- [php](docs/php.md) short guide for getting php up and running with nginx
 
 # Admin
 
