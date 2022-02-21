@@ -37,6 +37,8 @@ location ~\.php${
 }
 ```
 replace TCP/IP address with the appropriate socket file if that's your preferred setup.
+Afterwards, since you've modified the nginx config, this of course requires a `systemctl restart nginx`.
+Tip: `nginx -t` let's you verify your syntx without killing the running nginx instance, leading to a smoother switchover.
 
 Create a file in the root dir for your website (so probably somwhere in `/var/www/`) ending in `.php` with the content:
 ```php
