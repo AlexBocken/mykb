@@ -80,7 +80,27 @@ git commit -am 'Fix for README file'
 ```
 
 Now push it to the server using `git push origin master`.
+## Configuration
+### Pass integration
+pass is a CLI password manager. It allows for git integration.
+First, install `pass-git-helper` from the AUR
+```sh
+paru -S pass-git-helper
+```
+Set pass as your credential helper in git:
+```sh
+git config --global credential.helper /usr/bin/pass-git-helper
+```
+In `~/.config/pass-git-helper/git-pass-mapping.ini`, create rules in the following way:
 
-### Further Info
+```ini
+[github.com]
+target=dev/github
+
+[*.fooo-bar.*]
+target=dev/fooo-bar
+```
+
+## Further Info
 
 - [Git Website](https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server)
