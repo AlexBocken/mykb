@@ -15,6 +15,7 @@ Happy to accept pull requests for new topics!
 - [rainloop](docs/rainloop.md) webbased email client
 - [server](docs/ServerSetup.md) short guide for hosting a server
 - [php](docs/php.md) short guide for getting php up and running with nginx
+- [matlab](docs/matlab.md) A proprietary but extensive python alternative with integrated IDE.
 
 # Admin
 
