@@ -24,7 +24,8 @@ will update the adblock lists without starting a qutebrowser window.
 
 To add scripts such as 4chanX to qutebrowser add the Js file to `${XDG_DATA_HOME:-$HOME/.local/share}/qutebrowser/greasemonkey`.
 
-###4chanX
+### 4chanX
+
 For 4chanX this would be:
 
 ```sh
@@ -32,7 +33,8 @@ wget -P ${XDG_DATA_HOME:-$HOME/.local/share}/qutebrowser/greasemonkey https://ww
 ```
 followed by a `:greasemonkey-reload` in qutebrowser to activate the newly added Java scripts.
 
-###Skip Youtube Ads
+### Skip Youtube Ads
+
 Automatically mute, speed up (at least 10x) and skip video ads on youtube.
 There are multiple versions out there that try to accomplish the same thing.
 Various versions can be found in [this github issue thread](https://github.com/qutebrowser/qutebrowser/issues/6480#issuecomment-876759237).
