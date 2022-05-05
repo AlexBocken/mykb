@@ -20,6 +20,15 @@ qutebrowser --nowindow ':adblock-update;;later 10000 download-clear'
 ```
 will update the adblock lists without starting a qutebrowser window.
 
+## Setting spellcheck languages
+This is a bit more involved since it requires a script that can only be found in the source code of qutebrowser.
+1. Download the qutebrowser source code: `git clone https://github.com/qutebrowser/qutebrowser`
+2. `cd qutebrowser`
+3. Install the wanted languages e.g. `python -m scripts.dictcli install en-GB`
+4. set spellcheck to the wanted languages in qutebrowser.
+   Qutebrowser can also use multiple languages by parsing a list:
+   `:set spellcheck.languages '["en-GB", "de-DE"]'`
+
 ## Greasemonkey scripts
 
 To add scripts such as 4chanX to qutebrowser add the Js file to `${XDG_DATA_HOME:-$HOME/.local/share}/qutebrowser/greasemonkey`.
