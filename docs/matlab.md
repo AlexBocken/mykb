@@ -36,6 +36,11 @@ Move the matlab.tar to the repository.
 Adjust the `pkgver` and `release` vars in the `PKGBUILD` to reflect current release.
 Run `makepkg -si` to install.
 
+### mv cannot stat error
+In the case of an error in the form of:
+`mv: cannot stat 'dependency_links.txt'$'\n''PKG-INFO'$'\n''SOURCES.txt'$'\n''top_level.txt': No such file or directory`
+Edit line 207 of the `PKGBUILD` to include `ls -d` instead of just `ls`.
+
 ## Configuration
 ### fix graphics driver with intel
 
@@ -53,3 +58,6 @@ s = settings;s.matlab.desktop.DisplayScaleFactor
 s.matlab.desktop.DisplayScaleFactor.PersonalValue = 2
 ```
 This value can be a float.
+
+### Fonts malformed
+Set Aliasing to true under `Preferences->MATLAB->Fonts` and reboot.
