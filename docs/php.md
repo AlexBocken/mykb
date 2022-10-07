@@ -31,7 +31,7 @@ listen = run/php/php7.3-fpm.sock
 ## Nginx
 To enable nginx to talk to php add the following to your website config:
 ```nginx
-location ~\.php${
+location ~ \.php${
 	include snippets/fastcgi-php.conf
 	fastcgi_pass 127.0.0.1:9000;
 }

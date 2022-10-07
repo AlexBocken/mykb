@@ -118,6 +118,43 @@ $endfor$
 </html>
 ```
 
+### Usage with abook
+
+Add  the following to the muttrc. The first line set the default query to use abook, while the second line allows us to quickly add the sender of a mail that we currently read to the adress book using `A`.
+
+```sh
+set query_command= "abook --mutt-query '%s'"
+macro index,pager  A "<pipe-message>abook --add-email-quiet<return>" "Add this sender to Abook"
+bind editor        <Tab> complete-query
+```
+To use abook for composing messages, we can just start a new mail, using `m`.
+Now press `Ctrl + t`. This pulls up a list of abook, which we now can navigate using the arrow keys.
+If you have found the recipient of choice, press enter.
+Sending a mail to more recipients, you can tag them using `t` in that list.
+Having selected all, press `;m` to save them and press enter.
+
+You can also search the query from abook. Having pressed `Ctrl+t`, press `/` to search.
+
+## Signature and GPG
+
+To sign and/or encrypt your mails via GPG, set the following in the muttrc:
+```sh
+set crypt_use_gpgme=yes
+set postpone_encrypt = yes
+set pgp_self_encrypt = yes
+set crypt_use_pka = no
+set crypt_autosign = no
+set crypt_autoencrypt = no
+set crypt_autopgp = yes
+set pgp_sign_as=0x12345678
+```
+
+The last line is the key id of the key you want to use for signing - which can be extracted from `gpg --keyid-format 0xlong -K --fingerprint`.
+
+To send an encrypted message, import the public key of the recipient using `gpg --import <keyfile>` or `gpg --auto-key-locate keyserver --locate-keys user@example.net`
+To bring up the `pgp` menu in mutt, press `p` before sending the mail.
+Then select encryption, and select the recipient from the list.
+
 
 
 TODO: delete plaintext attachment after HTML creation
