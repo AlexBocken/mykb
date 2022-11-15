@@ -10,7 +10,8 @@ Happy to accept pull requests for new topics!
 - [weechat](docs/weechat.md) TUI client for matrix
 - [git](docs/GIT.md) version control software
 - [neomutt](docs/neomutt.md) highly customizable TUI email client
-- [matlab](docs/matlab.md) A proprietary but extensive python alternative with integrated IDE.
+- [matlab](docs/matlab.md) A proprietary but extensive python alternative with integrated IDE
+- [nvidia](docs/nvidia.md) Various recommendations for setting up NVIDIA drivers
 
 # Server
 - [server](docs/ServerSetup.md) short guide for hosting a server
