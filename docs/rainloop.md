@@ -89,3 +89,17 @@ quit
 # Certbot
 
 Give the webmail client proper security using `certbot --nginx` to extend your certificate.
+
+# Increasing the upload limit
+
+To increase the maximal upload through the rainloop interface to 100 MB, we do:
+
+1. `vim /etc/php/7.3/fpm/php.ini`
+   - Set `upload_max_filesize` to `100M`
+   - Set `post_max_size` to `100M`
+2. `systemctl restart php7.3-fpm`
+3. `vim /etc/nginx/nginx.conf`
+   - Set `client_max_body_size` to `100M`
+4. `systemctl restart nginx`
+5. Go to `http:/webmail.hostname.xyz/?admin` and under `General` set `Upload size limit` to `100M`
+   - Here you can also see if the php settings worked out.

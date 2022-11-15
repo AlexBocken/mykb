@@ -80,7 +80,14 @@ git commit -am 'Fix for README file'
 ```
 
 Now push it to the server using `git push origin master`.
+
+### Branches
+
+To create a new branch, use `git checkout -b <BRANCHNAME>`.
+To push this to the remote location, use `git push origin <BRANCHNAME>`.
+
 ## Configuration
+
 ### Pass integration
 pass is a CLI password manager. It allows for git integration.
 First, install `pass-git-helper` from the AUR
@@ -100,6 +107,7 @@ target=dev/github
 [*.fooo-bar.*]
 target=dev/fooo-bar
 ```
+
 
 ## Further Info
 

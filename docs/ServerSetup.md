@@ -60,3 +60,4 @@ Also set the MX records on you dns service provider and let it point to `mail.HO
 # Possible Hickups on the way
 
 - If you had that domain already set up on a server with a different IP address, you have to clean out your local `.ssh/known_hosts` before you can connect using `ssh`.
+- Make sure that the config files for nginx include `listen 80; listen [::]:80;`, otherwise the certbot install will fail.
