@@ -1,12 +1,13 @@
-#LUKS2 fully encrypted Arch-Linux
+# LUKS2 fully encrypted Arch-Linux
 
 As the Key-derivation functions for LUKS1 are lacking but GRUB normally only supports LUKS1, additional steps are required to get a working fully encrypted LUKS2 encrypted hard drive.
 The basic process is similar to a LUKS1 encrypted hard-drive but afterwards before the reboot into your installed OS additional measures need to be taken.
 This works only with UEFI-systems.
 
-In this tutorial we're assuming you want to install everything to /dev/sda and an ext4 FS. BTRFS requires additional steps to my knowledge.
+In this tutorial we're assuming you want to install everything to /dev/sda and an ext4 FS.
+BTRFS requires additional steps to my knowledge.
 
-# Boot into ISO, create lvm and mount
+# Boot into ISO, create LVM and mount
 
 We want three partitions: sda1: 1M, sda2: 500M (your EFI), and the rest for your encrypted hard-drive.
 Create partition table via `cfdisk` or similar tools.
@@ -48,7 +49,7 @@ Note the lack of grub in the pacstrap, we will build this later
 pacstrap -K /mnt base base-devel linux linux-firmware lvm2 efibootmgr networkmanager neovim ...
 genfstab -U >> /mnt/etc/fstab
 arch-chroot /mnt
-echo <hostname> /etc/hostname
+echo YourHostName > /etc/hostname
 nvim /etc/locale-gen
 locale-gen
 ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
@@ -66,7 +67,7 @@ and rebuild initramfs:
 mkinitcpio -P
 ```
 
-## Create new user, download AUR helper and install grub-improved-luks2-git
+## Create new user, download AUR helper, and install grub-improved-luks2-git
 ```
 useradd -m -G wheel alex
 passwd alex
@@ -119,9 +120,10 @@ normal
 ```
 and replace UUID with the same UUID as before, (again, a `ls -l /dev/disk/by-uuid >> /boot/grub/grub-pre.cfg` can help here)
 
+Now we can overwrite our previously generated grubx64.efi with a luks2 compatible one:
 ```
 grub-mkimage -p /boot/grub -O x86_64-efi -c /boot/grub/grub-pre.cfg -o /tmp/grubx64.efi lvm luks2 part_gpt cryptodisk gcry_rijndael argon2 gcry_sha256 ext2
 install -v /tmp/grubx64.efi /efi/EFI/GRUB/grubx64.efi
 ```
-We should now be done. exit, umount -R /mnt, and reboot into GRUB to see whether everything worked.
+We should now be done. `exit`, `umount -R /mnt`, and `reboot` into GRUB to see whether everything worked.
 This still requires you to enter your passphrase twice but can be alleviated just as with the LUKS1 case: https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#With_a_keyfile_embedded_in_the_initramfs
