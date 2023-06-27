@@ -15,6 +15,7 @@ Happy to accept pull requests for new topics!
 - [JohnTheRipper](docs/johntheripper.md) A password cracker
 - [pass](docs/pass.md) A password manager
 - [beancount](docs/beancount.md) A ledger for text-file bookkeeping with a lot of features
+- [LUKS2 fully encrypted drive](docs/luks2.md) A fully encrypted hard-drive tutorial using a strong KDF and GRUB via grub-improved-luks2-git
 
 # Server
 - [server](docs/ServerSetup.md) short guide for hosting a server
