@@ -50,15 +50,15 @@ pacstrap -K /mnt base base-devel linux linux-firmware lvm2 efibootmgr networkman
 genfstab -U >> /mnt/etc/fstab
 arch-chroot /mnt
 echo YourHostName > /etc/hostname
-nvim /etc/locale-gen
+nvim /etc/locale.conf
 locale-gen
 ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
 hwclock --systohc
 passwd
 ```
 
-## Edit /edit/mkinitcpio.conf to support encryption
-In /etc/mkninitcpio.conf edit the HOOKS:
+## Edit /etc/mkinitcpio.conf to support encryption
+In `/etc/mkinitcpio.conf` edit the HOOKS to include these highlighted ones as well:
 ```
 HOOKS=(base __udev__ autodetect modconf kms keyboard keymap consolefont block __encrypt__ __lvm2__ filesystems fsck)
 ```
