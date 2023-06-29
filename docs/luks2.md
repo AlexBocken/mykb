@@ -97,11 +97,11 @@ and adjust two things in the file:
 ```
 GRUB_ENABLE_CRYPTODISK=y
 ```
-and
+and add to `GRUB_CMDLINE_LINUX`: (can have multiple, space-separated arguments so don't delete anything if it's there, just add.)
 ```
-GRUB_CMDLINE_LINUX="... cryptdevice=UUID=device-UUID:cryptlvm ..."
+GRUB_CMDLINE_LINUX="cryptdevice=UUID=device-UUID:cryptlvm"
 ```
-and recilace "device-UUID" with the uuid we got from the previous ls command. Of course remove all the trailing ls output.
+and replace "device-UUID" with the uuid we got for `/dev/sda3` from the previous `ls` command. Of course remove all the trailing `ls` output.
 
 ```sh
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck
@@ -111,14 +111,14 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## LUKS2 support
 Now create an additional file in `/boot/grub/grub-pre.cfg` with the follwing content:
 ```
-set crypto_uuid=UUID
+set crypto_uuid=device-UUID
 cryptomount -u $crypto_uuid
 set root=lvm/vg-root
 set prefix=($root)/boot/grub
 insmod normal
 normal
 ```
-and replace UUID with the same UUID as before, (again, a `ls -l /dev/disk/by-uuid >> /boot/grub/grub-pre.cfg` can help here)
+and replace device-UUID with the same device-UUID as before, (again, a `ls -l /dev/disk/by-uuid >> /boot/grub/grub-pre.cfg` can help here to get the UUID for `/dev/sda3`)
 
 Now we can overwrite our previously generated grubx64.efi with a luks2 compatible one:
 ```
@@ -126,4 +126,55 @@ grub-mkimage -p /boot/grub -O x86_64-efi -c /boot/grub/grub-pre.cfg -o /tmp/grub
 install -v /tmp/grubx64.efi /efi/EFI/GRUB/grubx64.efi
 ```
 We should now be done. `exit`, `umount -R /mnt`, and `reboot` into GRUB to see whether everything worked.
-This still requires you to enter your passphrase twice but can be alleviated just as with the LUKS1 case: https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#With_a_keyfile_embedded_in_the_initramfs
+This still requires you to enter your passphrase twice but can be alleviated just as with the LUKS1 case:
+https://wiki.archlinux.org/title/Dm-crypt/Device_encryption#With_a_keyfile_embedded_in_the_initramfs
+
+
+# NOT TESTED, assumed to be the same as the LUKS1 case
+## Use swap for hibernations
+Add the `resume` hook in `/etc/mkinitcpio.conf`:
+```
+HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block encrypt lvm2 __resume__ filesystems fsck)
+```
+and rebuild via `mkinitcpio -P`.
+
+Then: add to the `GRUB_CMDLINE_LINUX` in `/etc/default/grub`:
+```
+GRUB_CMDLINE_LINUX="... resume=/dev/vg/swap"
+```
+and rebuild GRUB.
+
+```sh
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkimage -p /boot/grub -O x86_64-efi -c /boot/grub/grub-pre.cfg -o /tmp/grubx64.efi lvm luks2 part_gpt cryptodisk gcry_rijndael argon2 gcry_sha256 ext2
+install -v /tmp/grubx64.efi /efi/EFI/GRUB/grubx64.efi
+```
+
+## Only enter the password once
+Create a keyfile:
+```sh
+dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
+chmod 600 /crypto_keyfile.bin
+cryptsetup luksAddKey /dev/sda3 /crypto_keyfile.bin
+```
+Add this to the initramfs:
+```
+FILES=("/crypto_keyfile.bin")
+```
+And rebuld via
+```sh
+mkinitcpio -P
+```
+
+And add this file to the `GRUB_CMDLINE_LINUX` in `/etc/default/grub`:
+```
+GRUB_CMDLINE_LINE="... cryptkey=rootfs:/crypto_keyfile.bin"
+```
+And again rebuild GRUB
+```sh
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkimage -p /boot/grub -O x86_64-efi -c /boot/grub/grub-pre.cfg -o /tmp/grubx64.efi lvm luks2 part_gpt cryptodisk gcry_rijndael argon2 gcry_sha256 ext2
+install -v /tmp/grubx64.efi /efi/EFI/GRUB/grubx64.efi
+```
