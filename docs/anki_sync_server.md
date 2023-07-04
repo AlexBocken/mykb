@@ -10,9 +10,9 @@ We're assuming here that you are running the latest Anki on your server, however
 
 ## Reverse Proxy using nginx
 Anki creates a sync server locally on 0.0.0.0:8080. We want to put this behind a reverse proxy for convenience.
-Create a new `server{}` section in your nginx setup. Recommended is a new file in `/etc/nginx/sites-available`
-```/etc/nginx/sites-available/anki_sync_server
-server{
+Create a new `server{}` section in your nginx setup. Recommended is a new file in `/etc/nginx/sites-available/anki_sync_server`
+
+```nginx
 	server_name anki.<yourdomain.tld>;
 	listen 80;
 	client_max_body_size 500M;
@@ -86,6 +86,6 @@ If everything looks good in the journal, you can `sytemctl renable anki_sync_ser
 
 ## Ankidroid
 1. Go to: `Settings -> Advanced -> Custom sync server`
-2. Set both the sync url and the media sync url to `https://anki.<yourdomain.tld>`
+2. Set both the sync url to: `https://anki.<yourdomain.tld>` and the media sync url to `https://anki.<yourdomain.tld>/msync`
 3. Click on the sync icon in the main top-bar. Login using your `<name1>` and `<password1>` you set in the service file.
 `
