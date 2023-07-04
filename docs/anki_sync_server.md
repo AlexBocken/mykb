@@ -57,7 +57,7 @@ chown -R /var/lib/anki anki:anki
 
 Using systemd, create a service file: `/etc/systemd/system/anki_sync_server.service`:
 
-```systemd
+```ini
 [Unit]
 Description=Personal Anki Sync Server
 After=network.target

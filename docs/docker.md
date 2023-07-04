@@ -5,7 +5,7 @@ General tips and tricks around docker, as it's usage has become unavoidable.
 You will be able to start any docker compose program via `systemctl start docker-compose@<program>`.
 
 Create the file `/etc/systemd/system/docker-compose@.service` with the following content:
-```
+```ini
 [Unit]
 Description=%i service with docker compose
 PartOf=docker.service
@@ -26,7 +26,7 @@ Create directories as necessary and place your `docker-compose.yml` in an approp
 Ergo: Your docker-compose.yml should be in `/etc/docker/compose/myprogram/docker-compose.yml`.
 
 Reload the daemon and start your service:
-```
+```sh
 systemctl daemon-reload
 sysetmctl start docker-compose@myprogram
 ```
