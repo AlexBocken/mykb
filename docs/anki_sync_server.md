@@ -13,6 +13,7 @@ Anki creates a sync server locally on 0.0.0.0:8080. We want to put this behind a
 Create a new `server{}` section in your nginx setup. Recommended is a new file in `/etc/nginx/sites-available/anki_sync_server`
 
 ```nginx
+server {
 	server_name anki.<yourdomain.tld>;
 	listen 80;
 	client_max_body_size 500M;
@@ -61,6 +62,8 @@ ExecStart=anki --syncserver
 Restart=always
 User=anki
 Group=anki
+Environment=SYNC_BASE="/var/lib/anki"
+Environment=MAX_SYNC_PAYLOAD_MEGS=500
 Environment=SYNC_USER1=<name1>:<password1>
 Environment=SYNC_USER2=<name2>:<password2>
 
@@ -86,6 +89,9 @@ If everything looks good in the journal, you can `sytemctl renable anki_sync_ser
 
 ## Ankidroid
 1. Go to: `Settings -> Advanced -> Custom sync server`
-2. Set both the sync url to: `https://anki.<yourdomain.tld>` and the media sync url to `https://anki.<yourdomain.tld>/msync`
-3. Click on the sync icon in the main top-bar. Login using your `<name1>` and `<password1>` you set in the service file.
-`
+2. Set the sync url to: `https://anki.<yourdomain.tld>`
+3. Set the media sync url to `https://anki.<yourdomain.tld>/msync`
+4. Click on the sync icon in the main top-bar. Login using your `<name1>` and `<password1>` you set in the service file.
+
+## More info
+See https://docs.ankiweb.net/sync-server.html
