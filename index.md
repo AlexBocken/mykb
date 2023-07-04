@@ -24,6 +24,7 @@ Happy to accept pull requests for new topics!
 - [git](docs/GIT.md) version control software
 - [rainloop](docs/rainloop.md) webbased email client
 - [anki sync server](anki_sync_server.md) personal sync server for anki, a spaced repetition learning program
+- [docker](docs/docker.md) General tips and tricks around the container manager
 
 # Admin
 
