@@ -23,6 +23,7 @@ Happy to accept pull requests for new topics!
 - [ssh](docs/ssh.md) ssh configuration
 - [git](docs/GIT.md) version control software
 - [rainloop](docs/rainloop.md) webbased email client
+- [anki sync server](anki_sync_server.md) personal sync server for anki, a spaced repetition learning program
 
 # Admin
 
