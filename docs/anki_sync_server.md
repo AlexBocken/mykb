@@ -1,7 +1,7 @@
 # Anki Sync Server
 With the new versions of Anki, `anki` now provides an integrated sync-server feature, allowing for up-to-date scheduler versions as long as anki on the server is also updated regularly.
 Other implementations such as [Anki Sync Server](https://github.com/dsnopek/anki-sync-server) might be less resource intensive but need to be updated separately to allow for newer scheduler versions.
-This requires quite a bit of memory, but a lot if it is shared. If you run anything else using python (very likely), running this sync server in addition should maybe an additional 100-200M.
+This requires quite a bit of memory, but a lot if it is shared. If you run anything else using python (very likely), running this sync server in addition should maybe require an additional 100-200M.
 
 ## Installation
 Install anki: `paru -S anki`
@@ -31,6 +31,11 @@ server {
 }
 ```
 Some of these settings are a bit overkill for anki, but are good defaults for modern web applications behind a reverse proxy.
+
+Link to enabled sites:
+```
+ln -s /etc/nginx/sites-available/anki_sync_server /etc/nginx/sites-enabled/
+```
 
 Check whether the syntax is good via `nginx -t` and if so, restart nginx `systemctl restart nginx`.
 This is still unencrypted. Using certbot you can now deploy certificates
