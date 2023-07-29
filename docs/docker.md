@@ -22,7 +22,7 @@ ExecStop=/usr/bin/docker compose stop
 WantedBy=multi-user.target
 ```
 
-Create directories as necessary and place your `docker-compose.yml` in an appropriately named folder (as an example: "myprogram") in `/etc/docker-compose`.
+Create directories as necessary and place your `docker-compose.yml` in an appropriately named folder (as an example: "myprogram") in `/etc/docker/compose`.
 Ergo: Your docker-compose.yml should be in `/etc/docker/compose/myprogram/docker-compose.yml`.
 
 Reload the daemon and start your service:
