@@ -25,6 +25,7 @@ Happy to accept pull requests for new topics!
 - [rainloop](docs/rainloop.md) webbased email client
 - [anki sync server](anki_sync_server.md) personal sync server for anki, a spaced repetition learning program
 - [docker](docs/docker.md) General tips and tricks around the container manager
+- [Searx](docs/Searx.md) A meta searchengine which respects privacy. Arch setup guide.
 
 # Admin
 
