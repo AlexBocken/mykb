@@ -73,7 +73,7 @@ server:
 
 #### Nginx
 
-In the appropriate `server{}` section of your nginx setup add the following:
+In the appropriate `server{ listen 443 ssl; }` section of your nginx setup add the following:
 Where `MINOR_VERSION` should be `11` for example for python 3.11, adjust appropriately.
 ```nginx
 location /searx/static/ {
