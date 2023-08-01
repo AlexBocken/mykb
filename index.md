@@ -29,6 +29,9 @@ Happy to accept pull requests for new topics!
 =======
 - [calcurse sync](docs/calDAV.md) Sync calcurse with you phone etc.
 
+# Other
+- [Chromecast with Google TV](docs/ChromecastGoogleTv.md) a neat way to disable the built-in launcher and it's baked-in ads.
+
 # Admin
 
 - [README](README.md)
