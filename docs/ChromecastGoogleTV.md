@@ -24,7 +24,7 @@ On the chromecast there should now pop-up a dialog asking whether you want to tr
 
 ### Disable the Default Launcher via ADB
 
-On your Laptop, open a terminal and ensure that you can find the chromecast via `adb show`. One device should be listed.
+On your Laptop, open a terminal and ensure that you can find the chromecast via `adb devices -l`. One device should be listed.
 
 Then, use these commands:
 ```sh
