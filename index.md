@@ -16,6 +16,7 @@ Happy to accept pull requests for new topics!
 - [pass](docs/pass.md) A password manager
 - [beancount](docs/beancount.md) A ledger for text-file bookkeeping with a lot of features
 - [LUKS2 fully encrypted drive](docs/luks2.md) A fully encrypted hard-drive tutorial using a strong KDF and GRUB via grub-improved-luks2-git
+- [restic backup](docs/restic.md) A backup software
 
 # Server
 - [server](docs/ServerSetup.md) short guide for hosting a server
@@ -26,6 +27,7 @@ Happy to accept pull requests for new topics!
 - [anki sync server](docs/anki_sync_server.md) personal sync server for anki, a spaced repetition learning program
 - [docker](docs/docker.md) General tips and tricks around the container manager
 - [Searx](docs/Searx.md) A meta searchengine which respects privacy. Arch setup guide.
+
 =======
 - [calcurse sync](docs/calDAV.md) Sync calcurse with you phone etc.
 
