@@ -9,8 +9,9 @@ BTRFS requires additional steps to my knowledge.
 
 # Boot into ISO, create LVM and mount
 
-We want three partitions: sda1: 1M, sda2: 500M (your EFI), and the rest for your encrypted hard-drive.
+We want two partitions: sda1: 500M, sda2: a lvm container for the rest for your encrypted hard-drive.
 Create partition table via `cfdisk` or similar tools.
+Note: for BIOS systems a dummy 1M parition would be also required. For UEFI this is not needed.
 
 ## Create LVM
 ```sh
@@ -46,11 +47,11 @@ mount --mkdir /dev/sda2 /mnt/efi
 ## Continue with your normal Arch install:
 Note the lack of grub in the pacstrap, we will build this later
 ```sh
-pacstrap -K /mnt base base-devel linux linux-firmware lvm2 efibootmgr networkmanager neovim ...
-genfstab -U >> /mnt/etc/fstab
+pacstrap -K /mnt base base-devel git linux linux-firmware lvm2 efibootmgr networkmanager neovim ...
+genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 echo YourHostName > /etc/hostname
-nvim /etc/locale.conf
+nvim /etc/locale.gen
 locale-gen
 ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
 hwclock --systohc
