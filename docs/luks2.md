@@ -15,8 +15,8 @@ Note: for BIOS systems a dummy 1M parition would be also required. For UEFI this
 
 ## Create LVM
 ```sh
-cryptsetup luksFormat /dev/sda3
-cryptsetup open /dev/sda3 cryptlvm
+cryptsetup luksFormat /dev/sda2
+cryptsetup open /dev/sda2 cryptlvm
 pvcreate /dev/mapper/cryptlvm
 vgcreate vg /dev/mapper/crypylvm
 ```
@@ -102,7 +102,7 @@ and add to `GRUB_CMDLINE_LINUX`: (can have multiple, space-separated arguments s
 ```/etc/default/grub
 GRUB_CMDLINE_LINUX="cryptdevice=UUID=device-UUID:cryptlvm"
 ```
-and replace "device-UUID" with the uuid we got for `/dev/sda3` from the previous `ls` command. Of course remove all the trailing `ls` output.
+and replace "device-UUID" with the uuid we got for `/dev/sda2` from the previous `ls` command. Of course remove all the trailing `ls` output.
 
 ```sh
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck
@@ -120,7 +120,7 @@ set prefix=($root)/boot/grub
 insmod normal
 normal
 ```
-and replace device-UUID with the same device-UUID as before, (again, a `ls -l /dev/disk/by-uuid >> /boot/grub/grub-pre.cfg` can help here to get the UUID for `/dev/sda3`)
+and replace device-UUID with the same device-UUID as before, (again, a `ls -l /dev/disk/by-uuid >> /boot/grub/grub-pre.cfg` can help here to get the UUID for `/dev/sda2`)
 
 Now we can overwrite our previously generated grubx64.efi with a luks2 compatible one:
 ```sh
@@ -135,7 +135,7 @@ Create a keyfile:
 ```sh
 dd bs=512 count=4 if=/dev/random of=/crypto_keyfile.bin iflag=fullblock
 chmod 600 /crypto_keyfile.bin
-cryptsetup luksAddKey /dev/sda3 /crypto_keyfile.bin
+cryptsetup luksAddKey /dev/sda2 /crypto_keyfile.bin
 ```
 Add this to the initramfs:
 ```/etc/mkinitcpio.conf
@@ -167,8 +167,8 @@ cryptsetup luksFormat /dev/sdX
 cryptsetup open /dev/sdX YourDiskNameHere
 mkfs.ext4 /dev/mapper/YourDiskNameHere
 ```
-If you do not wish to have to enter the additional password on boot-up you will have to create a keyfile like we did for our /dev/sda3 above.
-Of course this will lessen security as any additional hard-drives can also be decrypted if `/dev/sda3` has been decrypted or cracked.
+If you do not wish to have to enter the additional password on boot-up you will have to create a keyfile like we did for our /dev/sda2 above.
+Of course this will lessen security as any additional hard-drives can also be decrypted if `/dev/sda2` has been decrypted or cracked.
 
 Systemd can autodetec keys in `/etc/cryptsetup-keys.d` if they have the pattern `YourDiskNameHere.key`. Create this directory if not already present:
 ```sh
