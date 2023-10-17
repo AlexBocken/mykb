@@ -3,6 +3,7 @@ Install instructions, configuration methods and much more for the setup of an us
 Happy to accept pull requests for new topics!
 
 # Desktop Programs
+- [Laptop Setup](docs/LaptopSetup.md) General tips and tricks around the quirks of Arch on a Laptop.
 - [qutebrowser](docs/qutebrowser.md)
     highly customizable keyboard focused webbrowser using vim bindings
 - [vimwiki](docs/vimwiki.md)
