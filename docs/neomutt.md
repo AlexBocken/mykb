@@ -1,5 +1,6 @@
 # Neomutt
 
+
 ## Markdown to HTML rendering
 To write more normie-friendly emails, non-plain-text emails are probably better.
 For this, a conversion from Markdown to HTML with Mathjax support seems best.
@@ -12,7 +13,7 @@ Ensure `pandoc` is installed. (`which pandoc || sudo pacman -S pandoc`)
 
 Add to your muttrc (either in `~/.mutt/muttrc` or `~/.config/mutt/muttrc`. From now on assuming `~/.config/mutt` as config folder)
 
-```
+```muttrc
 macro compose m \
 "<enter-command>set pipe_decode<enter>\
 <pipe-message>pandoc -f gfm -t plain -o /tmp/msg.txt<enter>\
@@ -77,7 +78,7 @@ Create a second macro for which you use a different template, that excludes the 
 This way you can create smaller emails with pure markdown syntax and when necessary can send mathematical formulas, resulting in larger mails.
 
 For this add the following to the muttrc:
-```
+```muttrc
 macro compose l \
 "<enter-command>set pipe_decode<enter>\
 <pipe-message>pandoc -f gfm -t plain -o /tmp/msg.txt<enter>\
@@ -117,8 +118,19 @@ $endfor$
 </body>
 </html>
 ```
+## Khard Adress Book integration
+Sadly, khard does not have a great TUI as abook, but it benefits from being able to sync with CardDav servers like Nextcloud.
 
-### Usage with abook
+For seamless integration such as adding emails and autocompleting from the address book, add the following to your muttrc (either in `~/.mutt/muttrc` or `~/.config/mutt/muttrc`. From now on assuming `~/.config/mutt` as config folder)
+```muttrc
+set query_command = "echo %s | xargs khard email --parsable --"
+macro index,pager a \
+  "<pipe-message>khard add-email<return>" \
+  "add the sender email address to khard"
+```
+For syncing with CardDav servers like Nextcloud look into [NextCloud](./nextcloud.md).
+
+## abook Adress Book integration
 
 Add  the following to the muttrc. The first line set the default query to use abook, while the second line allows us to quickly add the sender of a mail that we currently read to the adress book using `A`.
 
