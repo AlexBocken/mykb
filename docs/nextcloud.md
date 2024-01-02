@@ -4,6 +4,197 @@ We're assuming an Arch Linux installation, but the steps should be similar for o
 There are two possible ways to serve Nextclouds PHP code: uWSGI and PHP-FPM.
 We'll be using PHP-FPM as this is the recommended way and nginx is easier to setup with it, especially if you wish to enable additional plugins such as LDAP.
 
+Be prepared for quite a bit of work, with too many files which look identical, but it's worth it.
+This instal guide is based on the [Arch Wiki](https://wiki.archlinux.org/index.php/Nextcloud) and the [Nextcloud documentation](https://docs.nextcloud.com/server/20/admin_manual/installation/source_installation.html). It mainly emphasizes some points which go under in the Arch Wiki article.
+
+We assume postgresql as the database backend, but you can also use mysql/mariadb (which is also the recommended way by Nextcloud). I do this because I run a lot of other stuff on postgresql already and like it :).
+PostgreSQL is said to deliver better performance and overall has fewer quirks compared to MariaDB/MySQL but expect less support from Nextcloud devs and community.
+Nginx is already assumed to be set up and you have a certbot certificate for your domain.
+In these instructions we will use `cloud.example.com` as the domain name, but you should of course replace it with your own.
+
+First, install the required packages:
+```sh
+pacman -S nextcloud
+```
+When asked, choose `php-legacy` as your PHP version.
+```sh
+pacman -S php-legacy-imagick lbrsvg --asdeps
+```
+### Configuration
+#### PHP
+```sh
+cp /etc/php-legacy/php.ini /etc/webapps/nextcloud
+chown nextcloud:nextcloud /etc/webapps/nextcloud/php.ini
+```
+enable the following extensions in `/etc/webapps/nextcloud/php.ini`:
+```ini
+extension=bcmath
+extension=bz2
+extension=exif
+extension=gd
+extension=iconv
+extension=intl
+extension=sysvsem
+; in case you installed php-legacy-imagick (as recommended)
+extension=imagick
+```
+Set date.timezone. For example:
+```ini
+date.timezone = Europe/Zurich
+```
+Raise PHP memory limit to at least 512MB:
+```ini
+memory_limit = 512M
+```
+Limit Nextcloud's access to the filesystem:
+```ini
+open_basedir=/var/lib/nextcloud:/tmp:/usr/share/webapps/nextcloud:/etc/webapps/nextcloud:/dev/urandom:/usr/lib/php-legacy/modules:/var/log/nextcloud:/proc/meminfo:/proc/cpuinfo
+```
+
+#### Nextcloud
+In `/etc/webapps/nextcloud/config/config.php` add:
+
+```php
+'trusted_domains' =>
+  array (
+    0 => 'localhost',
+    1 => 'cloud.example.com',
+  ),
+'overwrite.cli.url' => 'https://cloud.mysite.com/',
+'htaccess.RewriteBase' => '/',
+```
+
+#### System and environment
+
+To make sure the Nextcloud specific `php.ini` is used by the `occ` tool set the environment variable `NEXTCLOUD_PHP_CONFIG`:
+```sh
+export NEXTCLOUD_PHP_CONFIG=/etc/webapps/nextcloud/php.ini
+```
+And also add this to your `.bashrc` or `.zshrc` (whichever is your shell) to make it permanent.
+
+As a privacy and security precaution create the dedicated directory for session data:
+```sh
+install --owner=nextcloud --group=nextcloud --mode=700 -d /var/lib/nextcloud/sessions
+```
+
+#### PostgreSQL
+I'm assuming you already have postgres installed and running. (Till feel free to improve this section)
+For additional security in this scenario it is recommended to configure PostgreSQL to only listen on a local UNIX socket:
+In `/var/lib/postgres/data/postgresql.conf`:
+```
+listen_addresses = ''
+```
+
+Especially do not forget to initialize your database with `initdb` if you have not setup postgresql yet.
+
+Now create a database and user for Nextcloud:
+```sh
+su - postgres
+psql
+CREATE USER nextcloud WITH PASSWORD 'db-password';
+CREATE DATABASE nextcloud TEMPLATE template0 ENCODING 'UNICODE';
+ALTER DATABASE nextcloud OWNER TO nextcloud;
+GRANT ALL PRIVILEGES ON DATABASE nextcloud TO nextcloud;
+\q
+```
+and of course replace `db-password` with a strong password of your choice.
+
+Additionally install `php-legacy-pgsql`:
+```sh
+pacman -S php-legacy-pgsql --asdeps
+```
+and enable this in /etc/webapps/nextcloud/php.ini:
+```ini
+extension=pdo_pgsql
+```
+
+Now setup Nextcloud's database schema with:
+```sh
+occ maintenance:install \
+    --database=pgsql \
+    --database-name=nextcloud \
+    --database-host=/run/postgresql \
+    --database-user=nextcloud \
+    --database-pass=<db-password> \
+    --admin-pass=<admin-password> \
+    --admin-email=<admin-email> \
+    --data-dir=/var/lib/nextcloud/data
+```
+and adjust the appropriate values in `<>` to your specific setup.
+
+Congrats, you now have nextcloud setup. Currently it is not yet being served, for this we need to continue with our fpm and nginx setup.
+
+#### FPM
+Install `php-legacy-fpm`:
+```sh
+pacman -S php-legacy-fpm --asdeps
+```
+##### php-fpm.ini
+We don't want to use the default php.ini for php-fpm, but a dedicated one. Hence we first copy the default php.ini to a dedicated one:
+
+```sh
+cp /etc/php-legacy/php.ini /etc/php-legacy/php-fpm.ini
+```
+
+Enable opcache in `/etc/php-legacy/php-fpm.ini`:
+```ini
+zend_extension=opcache
+```
+And set the following parameters under `[opcache]` in `/etc/php-legacy/php-fpm.ini`:
+```ini
+[opcache]
+opcache.enable = 1
+opcache.interned_strings_buffer = 8
+opcache.max_accelerated_files = 10000
+opcache.memory_consumption = 128
+opcache.save_comments = 1
+opcache.revalidate_freq = 1
+```
+This should differ from the default only in `opcache.revalidate_freq` but be sure to uncomment all of them anyways.
+
+#### nextcloud.conf
+Next you have to create a so called pool file for FPM. It is responsible for spawning dedicated FPM processes for the Nextcloud application. Create a file `/etc/php-legacy/php-fpm.d/nextcloud.conf`.
+You can use the file in this repository as a template [Here a link](../static/nextcloud/nextcloud.conf). It should work out of the box without any modifications.
+
+Create the access log directory:
+```sh
+mkdir -p /var/log/php-fpm-legacy/access
+```
+
+#### Systemd service
+To overwrite the default php-fpm-legacy service create a file in `/etc/systemd/system/php-fpm-legacy.service.d/override.conf` with the following content:
+```ini
+[Service]
+ExecStart=
+ExecStart=/usr/bin/php-fpm-legacy --nodaemonize --fpm-config /etc/php-legacy/php-fpm.conf --php-ini /etc/php-legacy/php-fpm.ini
+ReadWritePaths=/var/lib/nextcloud
+ReadWritePaths=/etc/webapps/nextcloud/config
+```
+
+Now you can `systemctl enable --now php-fpm-legacy`.
+
+##### Keep /etc tidy
+As a small bonus you can remove the unnecessary uwsgi config files by adding this to `/etc/pacman.conf`:
+
+```
+# uWSGI configuration that comes with Nextcloud is not needed
+NoExtract = etc/uwsgi/nextcloud.ini
+```
+#### Nginx
+Finally we're at the nginx part and are almost ready to test our setup.
+We're assuming you have a working nginx setup with a certbot certificate for your domain and possible domains are in `/etc/nginx/sites-available/` and symlinked to `/etc/nginx/sites-enabled/` to enable them (like Debian).
+
+The nextcloud documentation has a great [example nginx configuration](https://docs.nextcloud.com/server/20/admin_manual/installation/source_installation.html#example-nginx-configuration) which we will use as a base.
+You can find the modified version in this repository [here](../static/nextcloud/nextcloud_nginx).
+Simply copy this file into `/etc/nginx/sites-available/nextcloud`, replace `cloud.example.com` with your domain, and symlink it to `/etc/nginx/sites-enabled/nextcloud`.
+
+You should now be able to restart nginx and access your nextcloud instance at https://cloud.example.com.
+
+### Performance Improvements
+#### Redis
+TODO
+
+#### APCu
 TODO
 
 ## Syncing files with Nextcloud
