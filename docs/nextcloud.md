@@ -197,3 +197,7 @@ Like with `khard` you can now add this to your cronjob to sync your calendar reg
 See my [syncclouds.sh script as an example](https://bocken.org/git/Alexander/dotfiles/src/branch/master/.local/bin/syncclouds.sh) which also handles corrupted lockfiles because of unexpected aborts.
 
 TODO: investigate wheter todos are possible to also be synced. Could not get it working myself.
+
+### Sync to Android
+
+If you wish to sync your calendar to your Android phone, you can use the [DAVx⁵](https://www.davx5.com/) app. Contacts are also possible

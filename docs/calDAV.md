@@ -3,6 +3,8 @@
 ### Goal
 
 - Set up a own caldav server which allows to sync [calcurse](https://www.calcurse.org/) with your other devices.
+If you want to run nextcloud anyways, you can also use its caldav server.
+This is a more light weight solution, which does not require a full php environment.
 
 ### Software used
 
