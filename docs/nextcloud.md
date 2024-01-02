@@ -190,6 +190,12 @@ Simply copy this file into `/etc/nginx/sites-available/nextcloud`, replace `clou
 
 You should now be able to restart nginx and access your nextcloud instance at https://cloud.example.com.
 
+##### Strict Transport Security
+For additional security, if everything works fine and you're happy with your domain you can uncomment the HSTS section in the nginx setup.
+```nginx
+    add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload" always;
+```
+
 #### Background jobs
 Nextcloud requires certain tasks to be run on a scheduled basis. See Nextcloud's documentation for some details. The easiest (and most reliable) way to set up these background jobs is to use the systemd service and timer units that are already installed by nextcloud.
 
