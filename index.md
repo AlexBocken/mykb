@@ -28,7 +28,7 @@ Happy to accept pull requests for new topics!
 - [anki sync server](docs/anki_sync_server.md) personal sync server for anki, a spaced repetition learning program
 - [docker](docs/docker.md) General tips and tricks around the container manager
 - [Searx](docs/Searx.md) A meta searchengine which respects privacy. Arch setup guide.
-- [Nextcloud](docs/Nextcloud.md) A self-hosted cloud solution. Installation (on Arch), configuration, and usage tips.
+- [Nextcloud](docs/nextcloud.md) A self-hosted cloud solution. Installation (on Arch), configuration, and usage tips.
 - [dnsmasq](docs/dnsmasq.md) A lightweight DNS server with DHCP and TFTP support.
 
 =======
