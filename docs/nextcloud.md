@@ -18,6 +18,9 @@ Of course adjust to your setup.
 Adding `-s` will make it sync a bit less verbose.
 
 ## Setup a drop-off folder in Nextcloud
+This is a quite useful feature to allow others to upload files to your Nextcloud without having to create an account.
+Very user-friendly for non-technical people to share high-resolution photos for example.
+The share link can also be password-protected such that not everyone can upload files to your server.
 
 1. Create a folder in Nextcloud, e.g. `Drop-off`.
 2. Click on the share icon and under share link select "File-drop". This will create a link that you can share with others.
