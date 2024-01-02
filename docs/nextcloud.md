@@ -252,12 +252,12 @@ You might see in your admin overview (https://cloud.example.com/settings/admin/o
 Your remote address was identified as "192.168.1.1" and is bruteforce throttled at the moment slowing down the performance of various requests. If the remote address is not your address this can be an indication that a proxy is not configured correctly. Further information can be found in the documentation ↗.
 
 This is because Nextcloud is not able to detect the specific local machine you're connecting from and hence throttles all local connections.
-The underlying issue is not Nextcloud but your Network setup, specifically your router.
+The underlying issue is not Nextcloud but your Network setup, specifically your router not allowing for the disabling of NAT Loopback.
 Discussion of this problem can be found here: https://help.nextcloud.com/t/all-lan-ips-are-shown-as-the-router-gateway-how-can-i-get-the-actual-ip-address/134872
 
 Your solution: Set up a local DNS server and resolve your domain to your local IP address, not the public one.
-
-TODO
+A simple appraoch would be to use dnsmasq for this.
+See [my dnsmasq.md](./dnsmasq.md) for more details on how to set this up.
 
 ## Syncing files with Nextcloud
 They GUI for syncing is surprisingly unusable, luckily the CLI is much better.

@@ -29,6 +29,7 @@ Happy to accept pull requests for new topics!
 - [docker](docs/docker.md) General tips and tricks around the container manager
 - [Searx](docs/Searx.md) A meta searchengine which respects privacy. Arch setup guide.
 - [Nextcloud](docs/Nextcloud.md) A self-hosted cloud solution. Installation (on Arch), configuration, and usage tips.
+- [dnsmasq](docs/dnsmasq.md) A lightweight DNS server with DHCP and TFTP support.
 
 =======
 - [calcurse sync](docs/calDAV.md) Sync calcurse with you phone etc.
