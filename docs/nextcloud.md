@@ -1,4 +1,4 @@
-#Nextcloud
+# Nextcloud
 ## Installation
 We're assuming an Arch Linux installation, but the steps should be similar for other distributions.
 There are two possible ways to serve Nextclouds PHP code: uWSGI and PHP-FPM.
@@ -60,7 +60,7 @@ In `/etc/webapps/nextcloud/config/config.php` add:
     0 => 'localhost',
     1 => 'cloud.example.com',
   ),
-'overwrite.cli.url' => 'https://cloud.mysite.com/',
+'overwrite.cli.url' => 'https://cloud.example.com/',
 'htaccess.RewriteBase' => '/',
 ```
 
@@ -190,11 +190,67 @@ Simply copy this file into `/etc/nginx/sites-available/nextcloud`, replace `clou
 
 You should now be able to restart nginx and access your nextcloud instance at https://cloud.example.com.
 
-### Performance Improvements
-#### Redis
-TODO
+#### Background jobs
+Nextcloud requires certain tasks to be run on a scheduled basis. See Nextcloud's documentation for some details. The easiest (and most reliable) way to set up these background jobs is to use the systemd service and timer units that are already installed by nextcloud.
+
+Override to the correct php version by adding the file `/etc/systemd/system/nextcloud-cron.service.d/override.conf` with the following content:
+```ini
+[Service]
+ExecStart=
+ExecStart=/usr/bin/php-legacy -c /etc/webapps/nextcloud/php.ini -f /usr/share/webapps/nextcloud/cron.php
+```
+
+After that enable and start nextcloud-cron.timer (not the service).
+```sh
+systemctl enable --now nextcloud-cron.timer
+```
+
+### Performance Improvements by in-memory caching
+Nextcloud's documentation recommends to apply some kind of in-memory object cache to significantly improve performance.
 
 #### APCu
+Install `php-legacy-apcu`:
+```sh
+pacman -S php-legacy-apcu --asdeps
+```
+In `/etc/webapps/nextcloud/php.ini` enable the following extensions by uncommenting this:
+```ini
+extension=apcu
+apc.ttl=7200
+apc.enable_cli = 1
+```
+Order is relevant so uncomment, don't add.
+
+in `/etc/php-legacy/php-fpm.d/nextcloud.conf` uncomment the following under `[nextcloud]`:
+```ini
+php_value[extension] = apcu
+php_admin_value[apc.ttl] = 7200
+```
+Restart your application server:
+```sh
+systemctl restart php-fpm-legacy
+```
+Add to `/etc/webapps/nextcloud/config/config.php `:
+```php
+'memcache.local' => '\OC\Memcache\APCu',
+```
+to the `CONFIG` array. (So `);` should be after this)
+A second application server retart is required and everything should be working.
+```sh
+systemctl restart php-fpm-legacy
+```
+
+### Do not bruteforce throttle local connections
+You might see in your admin overview (https://cloud.example.com/settings/admin/overview) an error message like this:
+
+Your remote address was identified as "192.168.1.1" and is bruteforce throttled at the moment slowing down the performance of various requests. If the remote address is not your address this can be an indication that a proxy is not configured correctly. Further information can be found in the documentation ↗.
+
+This is because Nextcloud is not able to detect the specific local machine you're connecting from and hence throttles all local connections.
+The underlying issue is not Nextcloud but your Network setup, specifically your router.
+Discussion of this problem can be found here: https://help.nextcloud.com/t/all-lan-ips-are-shown-as-the-router-gateway-how-can-i-get-the-actual-ip-address/134872
+
+Your solution: Set up a local DNS server and resolve your domain to your local IP address, not the public one.
+
 TODO
 
 ## Syncing files with Nextcloud
