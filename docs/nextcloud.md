@@ -219,6 +219,12 @@ Install `php-legacy-apcu`:
 ```sh
 pacman -S php-legacy-apcu --asdeps
 ```
+
+Uncomment the follwing in `/etc/php-legacy/conf.d/apcu.ini`:
+```ini
+extension=apcu.so
+```
+
 In `/etc/webapps/nextcloud/php.ini` enable the following extensions by uncommenting this:
 ```ini
 extension=apcu
@@ -245,6 +251,102 @@ A second application server retart is required and everything should be working.
 ```sh
 systemctl restart php-fpm-legacy
 ```
+
+#### Redis
+You are able to use both APCu and Redis simultaneously for caching. The combination should be faster than either one alone.
+
+Install redis and the php-legacy extensions:
+```sh
+pacman -S redis
+pacman -S php-legacy-redis php-legacy-igbinary --asdeps
+```
+
+Adjust the following in `/etc/redis.conf`:
+```ini
+protected-mode yes # only listen on localhost
+port 0 # only listen on unix socket
+unixsocket /run/redis/redis.sock
+unixsocketperm 770
+```
+The rest should be able to stay as is.
+Start and enable the redis service:
+```sh
+systemctl enbale --now redis
+```
+and check that it is running:
+```sh
+systemctl status redis
+```
+Also check that the socket is created:
+```sh
+ls -l /run/redis/redis.sock
+```
+You can also run a sanity check by connecting to the socket:
+```sh
+redis-cli -s /run/redis/redis.sock ping
+```
+(You should get a `PONG` response)
+
+If everything works fine on the redis side, we can now configure php to use it.
+```
+
+In `/etc/php-legacy/conf.d/redis.ini` uncomment the following:
+```ini
+extension=redis
+```
+and analogously in `/etc/php-legacy/php-fpm.d/igbinary.ini`:
+```ini
+extension=igbinary.so
+
+igbinary.compact_strings=On
+```
+Now we can configure Nextcloud to use redis as a cache.
+First, add the nextcloud user to the redis group:
+```sh
+usermod -a -G redis nextcloud
+```
+You can verify that nextcloud now has access to the redis socket by running:
+```sh
+sudo -u nextcloud redis-cli -s /run/redis/redis.sock ping
+```
+
+In `/etc/webapps/nextcloud/php.ini` uncomment the following:
+```ini
+; REDIS
+extension=igbinary
+extension=redis
+```
+and add the redis unix socket directory to the `open_basedir` directive:
+```ini
+open_basedir = <your_current_value>:/run/redis
+```
+
+In /etc/webapps/nextcloud/config/config.php add the following to the `CONFIG` array:
+```php
+'memcache.distributed' => '\\OC\\Memcache\\Redis',
+'filelocking.enabled' => 'true',
+'memcache.locking' => '\\OC\\Memcache\\Redis',
+'redis' =>
+array (
+    'host' => '/run/redis/redis.sock',
+    'port' => 0,
+),
+```
+And finally in `/etc/php-legacy/fpm.d/nextcloud.conf` uncomment:
+```ini
+php_value[extension] = igbinary
+php_value[extension] = redis
+```
+Also, add to the `open_basedir` directive the redis unix socket directory:
+```ini
+php_value[open_basedir] = <your_current_value>:/run/redis
+```
+Restart your application server:
+```sh
+systemctl restart php-fpm-legacy
+```
+Check that everything works by visiting cloud.example.com and checking the admin overview page.
+If you have an internal server error and are not even able to access cloud.example.com, check the nginx error log for details.
 
 ### Do not bruteforce throttle local connections
 You might see in your admin overview (https://cloud.example.com/settings/admin/overview) an error message like this:
