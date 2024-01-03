@@ -213,6 +213,7 @@ systemctl enable --now nextcloud-cron.timer
 
 ### Performance Improvements by in-memory caching
 Nextcloud's documentation recommends to apply some kind of in-memory object cache to significantly improve performance.
+You are able to use both APCu and Redis simultaneously for caching. The combination should be faster than either one alone.
 
 #### APCu
 Install `php-legacy-apcu`:
@@ -251,9 +252,7 @@ A second application server retart is required and everything should be working.
 ```sh
 systemctl restart php-fpm-legacy
 ```
-
 #### Redis
-You are able to use both APCu and Redis simultaneously for caching. The combination should be faster than either one alone.
 
 Install redis and the php-legacy extensions:
 ```sh
@@ -288,7 +287,6 @@ redis-cli -s /run/redis/redis.sock ping
 (You should get a `PONG` response)
 
 If everything works fine on the redis side, we can now configure php to use it.
-```
 
 In `/etc/php-legacy/conf.d/redis.ini` uncomment the following:
 ```ini
@@ -296,6 +294,7 @@ extension=redis
 ```
 and analogously in `/etc/php-legacy/php-fpm.d/igbinary.ini`:
 ```ini
+[igbinary]
 extension=igbinary.so
 
 igbinary.compact_strings=On
