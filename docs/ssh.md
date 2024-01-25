@@ -77,3 +77,16 @@ Host EXEMPwork
 ```
 to your `~/.ssh/config`.
 To connect to the working server, just type `ssh EXEMPwork`.
+
+## Share your clipboard with the server
+To be able to copy/paste between server and client we need to install `xclip` and `xorg-clipboard` on the server. (Arch: `pacman -S xclip xorg-clipboard`)
+
+Ensure that the server has enabled X11 forwarding by adding `X11Forwarding yes` to `/etc/ssh/sshd_config` and restarting the sshd service.
+
+You should now be able to share the clipboard via `ssh -XY user@domain` or by making it permanent adding
+the following to the corresponding Host block in your `~/.ssh/config`:
+
+```
+ForwardX11 yes
+ForwardX11Trusted yes
+```
