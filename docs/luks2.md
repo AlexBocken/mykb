@@ -34,14 +34,17 @@ mkfs.ext4 /dev/vg/home
 mkswap /dev/vg/swap
 ```
 and finally mount them. EFI should be mounted to `/mnt/efi`
-
+If you have not yet created a filesystem on your efi partition, do so now:
+```sh
+mkfs.fat -F32 /dev/sda1
+```
 
 ```sh
 mount /dev/vg/root /mnt
 mount --mkdir /dev/vg/home /mnt/home
 swapon /dev/vg/swap
 
-mount --mkdir /dev/sda2 /mnt/efi
+mount --mkdir /dev/sda1 /mnt/efi
 ```
 
 ## Continue with your normal Arch install:
@@ -98,7 +101,7 @@ and adjust two things in the file:
 ```/etc/default/grub
 GRUB_ENABLE_CRYPTODISK=y
 ```
-and add to `GRUB_CMDLINE_LINUX`: (can have multiple, space-separated arguments so don't delete anything if it's there, just add.)
+and add to `GRUB_CMDLINE_LINUX_DEFAULT`: (can have multiple, space-separated arguments so don't delete anything if it's there, just add.)
 ```/etc/default/grub
 GRUB_CMDLINE_LINUX="cryptdevice=UUID=device-UUID:cryptlvm"
 ```
